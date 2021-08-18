@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+</head>
+
+<body>
+    <template id="tmp1">
+        <h3>这是由带id的template创建的组件</h3>
+    </template>
+    <div id="app">
+        <!-- 使用组件，直接把组件的名称以html标签的形式引入到html中即可，驼峰命名中的大写需要改成 -小写 -->
+        <my-comp1></my-comp1>
+        <my-comp2></my-comp2>
+        <my-comp3></my-comp3>
+        <my-comp4></my-comp4>
+    </div>
+
+    <div id="app2">
+        <p>全局组件</p>
+        <my-comp4></my-comp4>
+        <p>私有组件</p>
+        <login></login>
+        
+    </div>
+    <script>
+        // 1.1使用Vue.extend创建组件
+        var comp1 = Vue.extend({
+            template: '<h3>使用Vue-extend创建的组件</h3>', //组件要展示的html结构
+        })
+        // 1.2 使用Vue.component('组件的名称',创建出来的组件模板对象)，在页面上放了myComp1就会展示comp1的组件内容
+        Vue.component('myComp1', comp1)
+
+
+        // 2 将Vue.component和Vue.extend结合
+        Vue.component('myComp2', Vue.extend({
+            template: '<h3>使用Vue-extend和Vue.component结合创建的组件</h3>',
+        }))
+
+
+        // 3 直接使用VUe.component创建组件
+        Vue.component('myComp3', {
+            template: '<h3>直接使用Vue.component创建的组件</h3>',
+        })
+
+
+        // 4 创建一个带id的template，在vue控制的div外部编写模板，将组件结构抽离出来
+        Vue.component('myComp4', {
+            template: '#tmp1',
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+
+        var vm2=new Vue({
+            el:'#app2',
+            data:{},
+            methods:{},
+            filters:{},
+            directives:{},
+            components:{
+                // 定义内部私有组件，也可以将组件抽离，定义私有组件还可以定义一个全局对象，在components内部直接写对象名就可以，相当于属性名就是对象名，引用时直接 <对象名>
+                login:{
+                    template:'<h1>这是私有的login组件</h1>'
+                }
+            },
+
+            // 8个生命周期钩子函数
+            beforeCreate(){},
+            created(){},
+            beforeMount(){},
+            mounted(){},
+            beforeupdate(){},
+            updated(){},
+            beforeDestory(){},
+            destoryed(){},
+        })
+    </script>
+</body>
+
+</html>

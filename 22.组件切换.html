@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <a href="" @click.prevent="flag=!flag">登录</a>
+        <a href="" @click.prevent="flag=!flag">注册</a>
+        <!-- v-if和v-else只适用于两个组件的切换 -->
+        <login v-if="flag"></login>
+        <singup v-else="flag"></singup>
+    </div>
+    <script>
+        Vue.component('login', {
+            template: '<h1>登录组件</h1>'
+        })
+
+        Vue.component('singup', {
+            template: '<h1>注册组件</h1>'
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: true
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

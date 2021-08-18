@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <!-- 定义两组样式来控制transition内部的元素实现动画，动画有四组周期，enter，enter-to，leave，leave-to -->
+    <style>
+        /* v-enter是动画进入之前 */
+        /* v-leave-to是动画离开之后 */
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+
+        /* 入场动画和离场动画的时间段 */
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.4s ease;
+        }
+
+        /* 第二个动画 */
+        .u-enter,
+        .u-leave-to {
+            opacity: 0;
+            transform: translateY(100px);
+        }
+
+        /* 入场动画和离场动画的时间段 */
+        .u-enter-active,
+        .u-leave-active {
+            transition: all 0.4s ease;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <!-- 点击按钮让h3显示，再点击则隐藏 -->
+        <p>没有动画的效果</p>
+        <input type="button" value="没有动画" @click="flag=!flag">
+        <h3 v-if="flag">一个H3</h3>
+        <hr />
+
+        <input type="button" value="动画1" @click="flag1=!flag1">
+        <!-- 使用transition元素将需要动画的元素包裹起来 -->
+        <transition>
+            <h3 v-if="flag1">一个H3</h3>
+        </transition>
+        <hr />
+
+        <input type="button" value="动画2" @click="flag2=!flag2">
+        <!-- 使用transition元素将需要动画的元素包裹起来，不加name属性的话，所有transtion包裹的元素共用一个动画，需要不同的动画要给transtion加上name属性，style中的v就改成name的值 -->
+        <transition name="u">
+            <h3 v-if="flag2">一个H3</h3>
+        </transition>
+
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: false,
+                flag1: false,
+                flag2: false,
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

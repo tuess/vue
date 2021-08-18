@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p id="p">{{msg}}</p>
+        <input type="button" value="修改msg" @click="msg='no'">
+    </div>
+    <script>
+        var vm=new Vue({
+           el:'#app',
+           data:{
+               msg:'ok'
+           },
+           methods:{
+               show(){
+                   console.log('执行了show方法')
+               }
+           },
+           beforeCreate(){
+            // 实例被完全创造出来之前执行此函数，在此期间，data和method中的数据都还没有初始化
+            // console.log(this.message)
+            // this.show()
+           },
+           created(){
+            // cerated中，data和method已经初始化好了，如果要调用method的方法，操纵datd中的数据最早只能在created中操作
+            // console.log(this.message)
+            // this.show()
+           },
+           beforeMount(){
+            // 表示模板已经在内存中编译完成，但尚未把模板渲染到页面中，在执行时，页面中的元素还没有真正被替换过来
+            // console.log(document.getElementById('p').innerText)
+           },
+           mounted(){
+            // 表示内存中的的模板已经真实的挂载到了页面中，用户已经可以看见渲染好的页面了
+            // mounted是实例创建期间最后一个生命周期函数，当执行完mounted就表示实例已经被完全创建好了
+            // console.log(document.getElementById('p').innerText)
+           },
+        //    运行中的两个事件
+           beforeUpdate(){
+            // 表示数据更新了，但是页面还没有更新,只有在数据更新的时候才会触发
+            // console.log('界面上的元素内容是：'+document.getElementById('p').innerText)
+            // console.log('data中的msg数据是：'+this.msg)
+           },
+           updated(){
+            // updated执行时，页面上显示的数据和data中的数据保持同步了，都是最新的
+            console.log('界面上的元素内容是：'+document.getElementById('p').innerText)
+            console.log('data中的msg数据是：'+this.msg)
+           }
+        //    后面还有beforeDestory和destoryed两个过程，当执行到beforeDestory的时候，实例的所有data和method还是可用的，还没有真正的执行销毁 
+        //    当执行到destory的时候，组件已经被完全销毁了，此时组件中所有的数据方法指令都不可用
+        });
+    </script>
+</body>
+
+</html>

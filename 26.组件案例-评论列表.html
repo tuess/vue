@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap.css">
+</head>
+
+<body>
+    <div id="app">
+        <comp1></comp1>
+
+        <ul class="list-group">
+            <li class="list-group-item" v-for="item in list" :key="item.id">
+                <span class="badge">评论人：{{item.user}}</span>
+                {{item.content}}
+            </li>
+        </ul>
+    </div>
+
+    <template id="tmp1">
+        <!-- 组件内容 -->
+        <div>
+            <div class="form-group">
+                <label>评论人：</label>
+                <input type="text" class="form-control" v-model="user">
+            </div>
+            <div class="form-group">
+                <label>评论内容：</label>
+                <textarea class="form-control" v-model="content"></textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" @click="add">发表评论</button>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        // 创建组件
+        var comp1 = {
+            template: '#tmp1',
+            data() {
+                return {
+                    user: '',
+                    content: '',
+                }
+            },
+            methods: {
+                add() { //发表评论的方法
+                    var comment = {
+                        user: this.user,
+                        content: this.content
+                    }
+                    // 从localstorage中获取所有的评论
+                    var list = JSON.parse(localStorage.getItem('comments') || '[]')
+                    list.unshift(comment)
+                    // 重新保存最新的评论数据
+                    localStorage.setItem('comments', JSON.stringify(list))
+                    this.user = this.comment = ''
+                }
+            },
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [{
+                        id: Date.now(),
+                        user: '李白',
+                        content: 'test1'
+                    },
+                    {
+                        id: Date.now(),
+                        user: '杜甫',
+                        content: 'test2'
+                    },
+                    {
+                        id: Date.now(),
+                        user: '苏轼',
+                        content: 'test3'
+                    },
+                ]
+            },
+            methods: {},
+            components: { //注册组件
+                comp1
+            },
+        });
+    </script>
+</body>
+
+</html>

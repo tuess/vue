@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <style>
+        .ball {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="加入购物车" @click="flag=!flag">
+        <!-- 1，使用transition把元素包裹起来 -->
+        <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+            <div class="ball" v-show="flag"></div>
+        </transition>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: false,
+            },
+            methods: {
+                // 动画钩子的第一个参数el表示要执行动画的那个元素，是原生的js DOM对象
+                beforeEnter(el) {
+                    // beforeEnter表示动画入场之前，此时动画尚未开始，可以在beforeEnte中设置元素开始动画之前的样式
+                    // 设置小球开始动画之前的起始位置
+                    el.style.transform = "translate(0,0)"
+                },
+                enter(el, done) {
+                    // 这句话没有实际效果，但是不写会没有动画效果，可以认为offset会强制刷新动画
+                    el.offsetWidth
+                    // enter表示动画开始之后的样式，可以设置小球完成动画之后的状态
+                    // 设置小球动画结束的位置
+                    el.style.transform = "translate(150px,400px)"
+                    el.style.transition = "all 1s ease"
+                    // 这里的done，起始就是afterEnter这个函数，就是afterEnter函数的引用，在enter中必须调用一次done
+                    done()
+                },
+                afterEnter(el) {
+                    // 动画完成之后会调用afterEnter
+                    // flag取非，隐藏小球，跳过后半场动画，将flag设为false，下次点击还是从false->true，会出现前半场动画
+                    this.flag = !this.flag
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

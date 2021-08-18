@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<script src="./lib/vue-2.6.10.js"></script>
+</head>
+
+<body>
+	<template id="myComp2"> //因为一个组件只能有一个根元素，所以要用div包裹起来
+		<div>
+			<input type="button" value="add" @click="add()"><br>
+			<label>{{conut}}</label>
+		</div>
+	</template>
+
+	<div id="app">
+		<comp1></comp1>
+		<comp2></comp2><hr>
+		<comp2></comp2><hr>
+		<comp2></comp2><hr>
+	</div>
+
+	<script>
+		Vue.component('comp1', {
+			template: '<h1>这是全局组件---{{msg}}</h1>',
+			// 组件中的data必须是一个方法，必须返回一个对象，使用方法和实例中data的使用方法一样
+			data: function () {
+				return {
+					msg: '这是组件中的data定义的数据'
+				}
+			}
+		})
+
+		Vue.component('comp2', {
+			template: '#myComp2',
+			data: function () {
+				return { //如果将人turn的对象在外部预定义的话，会导致三个组件指向同一个对象的引用
+					conut: 0
+				}
+			},
+			methods: {
+				add() {
+					this.conut++
+				}
+			}
+		})
+
+		var vm = new Vue({
+			el: '#app',
+			data: {},
+			methods: {},
+		});
+	</script>
+</body>
+
+</html>

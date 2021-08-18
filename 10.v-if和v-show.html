@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="button" @click="flag=!flag">
+        <!-- v-if的特点是每次都会重新删除或创建元素，有较高的切换性能消耗-->
+        <h3 v-if="flag ">这是v-if控制的元素</h3>
+        <!-- v-show不会重新进行DOM的创建和删除，只会切换元素的dispaly:none样式，有较高的初始渲染消耗 -->
+        <!-- 如果元素涉及频繁的切换，推荐使用v-show，如果元素可能永远不会显示出来，推荐使用v-if -->
+        <h3 v-show="flag">这是v-show控制的元素</h3>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: true,
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

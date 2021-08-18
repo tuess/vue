@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <style>
+        .inner {
+            margin-top: 10px;
+            width: 100px;
+            height: 100px;
+            background-color: darkgoldenrod;
+        }
+
+        .outer {
+            padding: 10px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 使用 .stop 阻止冒泡 -->
+        <div class="inner" @click="divClick">
+            <input type="button" value="button" @click.stop="btnClick">
+        </div>
+
+        <!-- 使用 .prevent 阻止默认行为 -->
+        <a href="https://www.bing.com" @click.prevent="linkClick">baidu</a>
+
+        <!-- 使用 .capture 实现捕获事件的触发机制 -->
+        <div class="inner" @click.capture="divClick">
+            <input type="button" value="button" @click="btnClick">
+        </div>
+
+        <!-- 使用 .self 实现只有点击当前元素的时候才会触发事件的处理函数 -->
+        <div class="inner" @click.self="divClick">
+            <input type="button" value="button" @click="btnClick">
+        </div>
+
+        <!-- 使用 .once 只处理一次事件处理函数 -->
+        <a href="https://www.bing.com" @click.prevent.once="linkClick">baidu</a>
+
+        <!-- .stop 和 .self 的区别  .self是阻止向外冒泡，而.self不会阻止，只是内层向外层冒泡到这里事件不触发而已，冒泡会继续进行 -->
+        <div class="outer" @click="div2Click">
+            <div class="inner" @click="divClick">
+                <input type="button" value="button" @click.stop="btnClick">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+                divClick() {
+                    alert("触发了div的点击事件");
+                },
+                btnClick() {
+                    alert("触发了button的点击事件");
+                },
+                linkClick() {
+                    alert("触发了链接的点击事件");
+                },
+                div2Click() {
+                    alert("触发了外层div的点击事件");
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

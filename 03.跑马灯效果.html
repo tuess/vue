@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="./lib/vue-2.6.10.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="begin" @click="begin">
+        <input type="button" value="stop" @click="stop">
+
+        <h4 style="color: brown">{{msg}}</h4>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'qwwertyuiopasdfghjklzxcvbnm',
+                intervalid:null, //在data上定义一个定时器的id
+            },
+            methods:{
+                begin(){
+                    // 判断intervalid是否为null，不为null则跳出
+                    if(this.intervalid != null) return;
+                    // 重新拼接字符串，设定定时器，VM实例会监听data数据的变化，发生变化后会重新渲染,=>解决了内外部this指向不一致的问题
+                    this.intervalid = setInterval(() => {
+                        console.log(this.msg)
+                        // 截取第一个字符串
+                        var start=this.msg.substring(0,1)
+                        // 截取剩下的字符串
+                        var end=this.msg.substring(1)
+                        // 重新拼接
+                        this.msg=end+start
+                    }, 400);
+                },
+                stop(){ //停止定时器，并将intervalid重新设定为null
+                    clearInterval(this.intervalid)
+                    this.intervalid=null;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

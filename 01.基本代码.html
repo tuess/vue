@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<!-- 导入vue.js的包 -->
+    <script type="text/javascript" src="./lib/vue-2.6.10.js"></script>
+</head>
+<body>
+	<div id="app">
+        <P>{{msg}}</P>
+    </div>
+
+    <script>
+        // 创建一个vue实例
+        var vm = new Vue({
+            el:'#app', //表示el控制id为app的区域
+            data:{ //data中存放的是el中要用到的数据
+                msg:'欢迎学习Vue'
+            },
+        })
+    
+        </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <!-- 引入第三方类可以直接在transition上写属性，不用自己编写入场离场 -->
+    <link rel="stylesheet" href="./lib/animate.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- 点击按钮让h3显示，再点击则隐藏，入场动画使用bounce-in，离场动画使用bounce-out，需要在有动画的元素上加class="animated"基本类 -->
+        <p>使用第三方类来实现动画效果</p>
+        <input type="button" value="动画" @click="flag=!flag">
+        <!-- 使用:duration来设置入场和离场动画时长，分开设置需要写成对象形式：:duration="{enter:200,leave:400}" -->
+        <transition enter-active-class="bounceIn" leave-active-class="bounceOut" :duration="900">
+            <h3 v-if="flag" class="animated">一个H3</h3>
+        </transition>
+        <hr />
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: false,
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

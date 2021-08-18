@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <style>
+        .red{
+            color: red;
+        }
+        .thin{
+            font-weight: 200;
+        }
+        .italic{
+            font-style: italic;
+        }
+        .active{
+            letter-spacing: 0.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1 class="red thin">qwertyuiop</h1>
+        <!-- 第一种使用方式，直接传递一个数组，这里的class需要用v-bind做数据绑定 -->
+        <h1 :class="['red','thin','italic']">sAFSGFSG</h1>
+
+        <!-- 在数组中使用三元表达式 -->
+        <h1 :class="['red','thin','italic',flag ? 'active' : '']">sAFSGFSG</h1>
+
+        <!-- 在数组中使用对象代替三元表达式 -->
+        <h1 :class="['red','thin','italic',{'active':flag}]">sAFSGFSG</h1>
+
+        <!-- 在为classs使用v-bind绑定对象的时候，对象的属性是类名，属性的值是一个标识符 -->
+        <h1 :class="{red:true,thin:false,italic:true,thin:false}">sAFSGFSG</h1>
+        <!-- 也可将对象写进data中替换 -->
+        <!-- <h1 :class="classObj">sAFSGFSG</h1> -->
+    </div>
+    <script>
+        var vm=new Vue({
+           el:'#app',
+           data:{
+               flag:true,
+               classObj:{red:true,thin:false,italic:true,thin:false}
+           },
+           methods:{}
+        });
+    </script>
+</body>
+
+</html>

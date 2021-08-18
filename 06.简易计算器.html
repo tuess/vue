@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="first">
+        <select v-model="opt">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" v-model="last">
+        <input type="button" value="=" @click="calc">
+        <input type="text" v-model="result">
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                first: '0',
+                last: '0',
+                result: '0',
+                opt: '+',
+            },
+            methods: {
+                calc() { //计算的方法
+                    switch(this.opt){
+                        case '+':
+                            this.result=parseInt(this.first)+parseInt(this.last)
+                            break;
+                        case '-':
+                            this.result=parseInt(this.first)+parseInt(this.last)
+                            break;
+                        case '*':
+                            this.result=parseInt(this.first)+parseInt(this.last)
+                            break;
+                        case '/':
+                            this.result=parseInt(this.first)+parseInt(this.last)
+                            break;
+                    }
+                    // var str = "parseInt(this.first)" + this.opt + "parseInt(this.last)"
+                    // this.result = eval(str)
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 传递方法只能用事件绑定符v-on -->
+        <comp1 v-on:func="show"></comp1>
+    </div>
+
+    <template id="tmp1">
+        <div>
+            <h1>这是子组件</h1>
+            <button @click="myclick">这是子组件的按钮，将调用父组件的方法</button>
+        </div>
+    </template>
+
+    <script>
+        var comp1 = {
+            template: '#tmp1',
+            data() {
+                return {
+                    sonmsg: {
+                        name: '子组件',
+                        id: '666'
+                    }
+                }
+            },
+            methods: {
+                myclick() {
+                    // 使用$emit方法调用父组件中绑定的func方法，需要传递的参数以逗号形式分隔
+                    // 在调用父组件的方法时传值
+                    this.$emit('func', this.sonmsg)
+                }
+            },
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                dataMsgFromSon: null
+            },
+            methods: {
+                show(data) {
+                    console.log('调用了父组件的console方法---' + data)
+                    console.log(data)
+                    // 父组件接收到传过来的值
+                    this.dataMsgFromSon = data
+                }
+            },
+            components: {
+                comp1
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="get请求" @click="getInfo">
+        <input type="button" value="post请求" @click="postInfo">
+        <input type="button" value="jsonp请求" @click="jsonpInfo">
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                getInfo() {
+                    // 发起get请求，通过.then设置成功的回调函数
+                    this.$http.get('http://120.77.181.41:3000/api/getgod?pageIdx=1').then(function (result) {
+                        //    通过result.body拿到服务器返回的数据
+                        console.log(result.body)
+                    })
+                },
+                postInfo() {
+                    // 发起post请求，第二个属性是post的数据，第三个属性中emulateJSON设为true，post上的数据会添加头信息（application-x-www-utlencode）
+                    this.$http.post('http://vue.studyit.io/api/post', {}, { emulateJSON: true }).then(result => {
+                        console.log(result.body)
+                    })
+                },
+                jsonpInfo(){
+                    this.$http.jsonp('http://vue.studyit.io/api/jsonp').then(result=>{
+                        console.log(result.body)
+                    })
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px)
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.6s ease;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <a href="" @click.prevent="compName='login'">登录</a>
+        <a href="" @click.prevent="compName='singup'">注册</a>
+        <!-- component是一个占位符，用来指定要展示的占位符的名称，通过组件名称来实现点击更换组件，可更换任意数量-->
+        <!-- 动画过渡生硬的问题也可以在 .v-leave-active中设置position：absolute解决，动画速度稍有不同 -->
+        <transition mode="out-in">
+            <component :is="compName"></component>
+        </transition>
+    </div>
+    <script>
+        Vue.component('login', {
+            template: '<h1>登录组件</h1>'
+        })
+
+        Vue.component('singup', {
+            template: '<h1>注册组件</h1>'
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                compName: 'login' //当前component中绑定的组件的名称
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
